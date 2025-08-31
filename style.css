@@ -1,0 +1,180 @@
+/* Глобальные CSS-переменные для управления стилями карточки */
+:root {
+  --font-family: 'Karla', sans-serif;
+  --bg-main: #131417;
+  --bg-card: #1e1f26;
+  --bg-stats: #131417;
+  --username: #b7bbc8;
+  --card-width: 340px;
+  --card-radius: 18px;
+  --card-bg: #131111;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.16);
+  --card-padding: 18px;
+  --avatar-size: 48px;
+  --avatar-border: 2px solid #eee;
+  --avatar-border-hover: #b3b3ff;
+  --title-size: 1.1rem;
+  --title-weight: 700;
+  --author-color: #888;
+  --author-size: 0.95rem;
+  --stat-color: #555;
+  --stat-color-hover: #7b61ff;
+  --transition-main: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.3s;
+  --stats-bg: #23243a;
+  --stats-bg-opacity: 0.92;
+  --stats-slide-distance: 32px;
+}
+
+/* Базовые стили для страницы */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  color: white;
+  background: var(--bg-main);
+}
+
+/* Сброс отступов для заголовков и параграфов */
+p,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Сброс отступов для списков */
+ul {
+  padding-left: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+/* Скругление для карточки и изображений */
+.card,
+img {
+  border-radius: 10px;
+}
+
+/* Основной контейнер карточки */
+.card {
+  margin: 0 auto;
+  width: var(--card-width);
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  font-family: 'Karla', sans-serif;
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: opacity var(--transition-main), transform var(--transition-main),
+    box-shadow var(--transition-fast);
+  /* Анимация появления карточки */
+  animation: cardFadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Ключевые кадры для анимации появления карточки */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Эффект наведения на карточку */
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px) scale(1.03);
+}
+
+/* Изображение превью карточки */
+.card-thumbnail img {
+  width: 100%;
+  display: block;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Блок с аватаром и деталями */
+.card-body {
+  display: flex;
+  align-items: center;
+  padding: var(--card-padding) var(--card-padding) 0 var(--card-padding);
+}
+
+/* Аватар пользователя */
+.card-avatar img {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 14px;
+  border: var(--avatar-border);
+  transition: border-color var(--transition-fast);
+}
+
+/* Эффект наведения на аватар */
+.card-avatar img:hover {
+  border-color: var(--avatar-border-hover);
+}
+
+/* Детали карточки (название и автор) */
+.card-details {
+  flex: 1;
+}
+
+.card-details h3 {
+  font-size: var(--title-size);
+  margin: 0 0 4px 0;
+  font-weight: var(--title-weight);
+}
+
+.card-details p {
+  margin: 0;
+  color: var(--author-color);
+  font-size: var(--author-size);
+}
+
+/* Статистика карточки (лайки, комментарии) */
+.card-stats {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 12px var(--card-padding) var(--card-padding) var(--card-padding);
+  list-style: none;
+  margin: 0;
+  background: rgba(35, 36, 58, var(--stats-bg-opacity));
+  border-radius: 0 0 var(--card-radius) var(--card-radius);
+  /* Начальное состояние: скрыто и сдвинуто вверх */
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--stats-slide-distance)));
+  transition: opacity var(--transition-main), transform var(--transition-main),
+    background var(--transition-fast);
+  position: relative;
+  z-index: 1;
+}
+
+/* При наведении на карточку статистика плавно появляется и выезжает вниз */
+.card:hover .card-stats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Элементы статистики */
+.card-stats li {
+  color: var(--stat-color);
+  font-size: 1rem;
+  transition: color var(--transition-fast);
+}
+
+/* Эффект наведения на элементы статистики */
+.card-stats li:hover {
+  color: var(--stat-color-hover);
+}
